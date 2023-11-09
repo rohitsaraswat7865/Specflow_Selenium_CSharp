@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,6 +65,51 @@ namespace SauceDemo.Support
             }            
         }
         /// <summary>
+        /// TryGetElements
+        /// </summary>
+        /// <param name="testObject"></param>
+        /// <param name="by"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public IReadOnlyCollection<IWebElement> TryGetElements(TestObject testObject,By by, Func<IWebElement, bool> func)
+        {
+            try
+            {
+                IReadOnlyCollection<IWebElement> elements;
+                elements = this.FluentRoutine<IWebDriver, IReadOnlyCollection < IWebElement >> (
+                    testObject.Driver,
+                      (driver) =>
+                      {
+                          return driver.FindElements(by);
+                      },
+                      TimeSpan.FromSeconds(2),
+                      TimeSpan.FromSeconds(6)
+                    );
+
+                if (elements != null)
+                {
+                    foreach(var element in elements)
+                    {
+                    var rslt = this.FluentRoutine<IWebElement, bool>(
+                    element,
+                    func,
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(5)
+                   
+                    );
+                        if (rslt == false) return null;
+                    }                    
+                }
+                return elements;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        
+        /// <summary>
         /// TryGetSubElement
         /// </summary>
         /// <param name="parentElement"></param>
@@ -78,9 +124,9 @@ namespace SauceDemo.Support
                 IWebElement element;
                 element = this.FluentRoutine<IWebElement, IWebElement>(
                     parentElement,
-                      (element) =>
+                      (parent) =>
                       {
-                          return element.FindElement(by);
+                          return parent.FindElement(by);
                       },
                       TimeSpan.FromSeconds(2),
                       TimeSpan.FromSeconds(6)

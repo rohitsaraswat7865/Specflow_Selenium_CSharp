@@ -1,7 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using SauceDemo.Support;
 using System;
+using System.Runtime.CompilerServices;
 using TechTalk.SpecFlow;
 
 namespace SauceDemo.StepDefinitions
@@ -27,8 +29,7 @@ namespace SauceDemo.StepDefinitions
             try
             {
                 Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "saucedemo"));
-                var headerLocator = locators["login_header"];
-                var headerTextElement = helper.TryGetElement(testObject, headerLocator, element => element.Displayed && element.Enabled);
+                var headerTextElement = helper.TryGetElement(testObject, locators["login_header"], element => element.Displayed && element.Enabled);
                 Assert.IsNotNull(headerTextElement);
                 Assert.IsTrue(headerTextElement.Text.Equals("Swag Labs"));
             }
@@ -44,11 +45,9 @@ namespace SauceDemo.StepDefinitions
         {
             try
             {
-                var userNameValue = configElements[userName];
-                var userNameLocator = locators["login_username"];
-                var userNameElement = helper.TryGetElement(testObject, userNameLocator, element => element.Enabled && element.Displayed);
+                var userNameElement = helper.TryGetElement(testObject, locators["login_username"], element => element.Enabled && element.Displayed);
                 Assert.IsNotNull(userNameElement);
-                userNameElement.SendKeys(userNameValue);
+                userNameElement.SendKeys(configElements[userName]);
             }
             catch (Exception ex)
             {
@@ -61,11 +60,9 @@ namespace SauceDemo.StepDefinitions
         {
             try
             {
-                var passwordValue = configElements["Password"];
-                var passwordLocator = locators["login_password"];
-                var passwordElement = helper.TryGetElement(testObject, passwordLocator, element => element.Enabled && element.Displayed);
+                var passwordElement = helper.TryGetElement(testObject, locators["login_password"], element => element.Enabled && element.Displayed);
                 Assert.IsNotNull(passwordElement);
-                passwordElement.SendKeys(passwordValue);
+                passwordElement.SendKeys(configElements["Password"]);
             }
             catch (Exception ex)
             {
@@ -101,6 +98,207 @@ namespace SauceDemo.StepDefinitions
                 Assert.Fail(ex.Message);
             }
         }
+
+        [When(@"Select following (.*) in product page")]
+        public void WhenSelectFollowingProductsInProductPage(string products)
+        {
+            try
+            {
+                var listOfRequiredProducts = products.Split(',').ToList();
+                var listOfAvailableProducts = helper.TryGetElements(testObject, locators["product_list"], element => element.Displayed).ToList();
+                List<IWebElement> listOfNeededProducts = new List<IWebElement>();
+                listOfAvailableProducts.ForEach(product =>
+                {
+                    listOfRequiredProducts.ForEach(requiredProduct =>
+                    {
+                        var txt = product.Text;
+                        if (txt.Contains(requiredProduct))
+                        {
+                            listOfNeededProducts.Add(product);
+                        }
+                    });
+                });
+                foreach(var product in listOfNeededProducts)
+                {
+                    var addToCartButton = helper.TryGetSubElement(product, locators["product_addToCart"], element => element.Displayed && element.Enabled);
+                    Assert.IsNotNull(addToCartButton);
+                    addToCartButton.Click();
+                }
+            }
+            catch(Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Then(@"Following (.*) are added to cart")]
+        public void ThenFollowingProductsAreAddedToCart(string products)
+        {
+           
+        }
+
+        [When(@"Click on cart icon in product page")]
+        public void WhenClickOnCartIconInProductPage()
+        {
+            try
+            {
+                var cartIconElement = helper.TryGetElement(testObject, locators["product_cartIcon"], element => element.Enabled && element.Displayed);
+                Assert.IsNotNull(cartIconElement);
+                cartIconElement.Click();
+            }
+            catch(Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Then(@"Cart page is loaded")]
+        public void ThenCartPageIsLoaded()
+        {
+            try
+            {
+                Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "/cart"));
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        [When(@"Remove a (.*) from cart")]
+        public void WhenRemoveAFleeceJacketFromTheCart(string productToRemove)
+        {
+            try
+            {
+                var listOfProductsInCart = helper.TryGetElements(testObject, locators["cart_items"], element => element.Displayed && element.Text != null);
+                var removeButtons = helper.TryGetElements(testObject, locators["cart_remove"], element => element.Enabled && element.Text.Equals("Remove"));
+                var buttonIterator = removeButtons.GetEnumerator();
+                foreach (var product in listOfProductsInCart)
+                {
+                    if (product.Text.Contains(productToRemove))
+                    {
+                        var actions = new Actions(testObject.Driver);
+                        actions.MoveToElement(buttonIterator.Current);
+                        actions.Click();
+                        actions.Build().Perform();
+                    }
+                    buttonIterator.MoveNext();
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+
+        [When(@"Click on checkout button in cart page")]
+        public void WhenClickOnCheckoutButtonInCartPage()
+        {
+            try
+            {
+                var cartCheckoutElement = helper.TryGetElement(testObject, locators["cart_checkout"], element => element.Enabled && element.Displayed);
+                Assert.IsNotNull(cartCheckoutElement);
+                cartCheckoutElement.Click();
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Then(@"Checkout info page is loaded")]
+        public void ThenCheckoutInfoPageIsLoaded()
+        {
+            try
+            {
+                Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "/checkout-step-one"));
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [When(@"Provide user information ([a-z]+) and ([a-z]+) and ([0-9]+)")]
+        public void WhenProvideUserInformationRohitSaraswat(string firstName, string lastName, string postalCode)
+        {
+            try
+            {
+                var firstNameElement = helper.TryGetElement(testObject, locators["checkout_firstname"], element => element.Enabled && element.Displayed);
+                Assert.IsNotNull(firstNameElement);
+                firstNameElement.SendKeys(firstName);
+                var lastNameElement = helper.TryGetElement(testObject, locators["checkout_lastname"], element => element.Enabled && element.Displayed);
+                Assert.IsNotNull(lastNameElement);
+                lastNameElement.SendKeys(lastName);
+                var postalCodeElement = helper.TryGetElement(testObject, locators["checkout_postalcode"], element => element.Enabled && element.Displayed);
+                Assert.IsNotNull(postalCodeElement);
+                postalCodeElement.SendKeys(postalCode);
+            }
+            catch(Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [When(@"Click on continue button in checkout info page")]
+        public void WhenClickOnContinueButtonInCheckoutInfoPage()
+        {
+            try
+            {
+                var continueButtonElement = helper.TryGetElement(testObject, locators["checkout_continue"], element => element.Enabled && element.Displayed);
+                Assert.IsNotNull(continueButtonElement);
+                continueButtonElement.Click();
+                               
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Then(@"Payment page is loaded")]
+        public void ThenPaymentPageIsLoaded()
+        {
+            try
+            {
+                Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "/checkout-step-two"));
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [When(@"Click on finish button in payment page")]
+        public void WhenClickOnFinishButtonInPaymentPage()
+        {
+
+            try
+            {
+                var finishButtonElement = helper.TryGetElement(testObject, locators["payment_finish"], element => element.Enabled && element.Displayed);
+                Assert.IsNotNull(finishButtonElement);
+                finishButtonElement.Click();
+
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Then(@"Checkout complete page is loaded")]
+        public void ThenCheckoutCompletePageIsLoaded()
+        {
+            try
+            {
+                Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "/checkout-complete"));
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
 
     }
 }

@@ -5,9 +5,18 @@
 		<xpath page="login" name="username">//input[@id='user-name']</xpath>
 		<xpath page="login" name="password">//input[@id='password']</xpath>
 		<xpath page="login" name="button">//input[@id='login-button']</xpath>
-		<xpath page="product"  name="productlist">//div[@class='inventory_item']</xpath>
-		<xpath page="product"  name="applications">//div[@id='main-navigation']//a[@id='menu-apps']</xpath>
-
+		<xpath page="product" name="list">//div[@class='inventory_item']</xpath>
+		<!--<xpath page="product" name="itemName">//div[@class='inventory_item_name ']</xpath>-->
+		<xpath page="product" name="addToCart">//div/div[@class='pricebar']/button[text()='Add to cart']</xpath>
+		<xpath page="product" name="cartIcon">//div[@id='shopping_cart_container']</xpath>
+		<xpath page="cart" name="items">//div[@class='cart_list']/div[@class='cart_item']</xpath>
+		<xpath page="cart" name="remove">/child::*//button[text()='Remove']</xpath>
+		<xpath page="cart" name="checkout">//div[@class='cart_footer']/button[text()='Checkout']</xpath>
+		<xpath page="checkout" name="firstname">//div[@class='form_group']/input[@id='first-name']</xpath>
+		<xpath page="checkout" name="lastname">//div[@class='form_group']/input[@id='last-name']</xpath>
+		<xpath page="checkout" name="postalcode">//div[@class='form_group']/input[@id='postal-code']</xpath>
+        <xpath page="checkout" name="continue">//form/div[@class='checkout_buttons']/input[@id='continue']</xpath>
+		<xpath page="payment" name="finish">//div[@class='cart_footer']/button[text()='Finish']</xpath>
 	</locators>
 	<!-- -->
 	<config key="SauceDemo_Site" value="https://www.saucedemo.com" ></config>

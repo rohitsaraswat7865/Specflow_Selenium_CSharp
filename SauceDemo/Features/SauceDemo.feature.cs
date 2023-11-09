@@ -117,7 +117,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("Login page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
-    testRunner.When(string.Format("Enter username as {0} in login page", uSER_NAME), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When(string.Format("Enter username as {0} in login page", uSER_NAME), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 8
  testRunner.And("Enter password in login page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -142,6 +142,103 @@ this.ScenarioInitialize(scenarioInfo);
         {
 #line 5
 this.Test1_ConfirmTheUserIsTakenToTheProductsPage("Standard_User", ((string[])(null)));
+#line hidden
+        }
+        
+        public virtual void Test2_Add3ItemsToBasketAndBuy2Items(string uSER_NAME, string pRODUCTS, string pRODUCT, string fIRST_NAME, string lAST_NAME, string pOSTAL_CODE, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "regression"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("USER_NAME", uSER_NAME);
+            argumentsOfScenario.Add("PRODUCTS", pRODUCTS);
+            argumentsOfScenario.Add("PRODUCT", pRODUCT);
+            argumentsOfScenario.Add("FIRST_NAME", fIRST_NAME);
+            argumentsOfScenario.Add("LAST_NAME", lAST_NAME);
+            argumentsOfScenario.Add("POSTAL_CODE", pOSTAL_CODE);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Test 2 - Add 3 items to basket and buy 2 items", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 17
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 18
+    testRunner.Given("Login page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 19
+ testRunner.When(string.Format("Enter username as {0} in login page", uSER_NAME), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 20
+ testRunner.And("Enter password in login page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 21
+ testRunner.And("Click submit button in login page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 22
+ testRunner.Then("Product page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 23
+ testRunner.When(string.Format("Select following {0} in product page", pRODUCTS), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 24
+ testRunner.And("Click on cart icon in product page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 25
+ testRunner.Then("Cart page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 26
+ testRunner.When(string.Format("Remove a {0} from cart", pRODUCT), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 27
+ testRunner.And("Click on checkout button in cart page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 28
+ testRunner.Then("Checkout info page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 29
+ testRunner.When(string.Format("Provide user information {0} and {1} and {2}", fIRST_NAME, lAST_NAME, pOSTAL_CODE), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 30
+ testRunner.And("Click on continue button in checkout info page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 31
+ testRunner.Then("Payment page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 32
+ testRunner.When("Click on finish button in payment page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 33
+ testRunner.Then("Checkout complete page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Test 2 - Add 3 items to basket and buy 2 items: Standard_User")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SauceDemo")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("regression")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Standard_User")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:USER_NAME", "Standard_User")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:PRODUCTS", "Backpack,Bolt T-Shirt,Bike Light")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:PRODUCT", "Bolt T-Shirt")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:FIRST_NAME", "rohit")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:LAST_NAME", "saraswat")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:POSTAL_CODE", "282007")]
+        public void Test2_Add3ItemsToBasketAndBuy2Items_Standard_User()
+        {
+#line 17
+this.Test2_Add3ItemsToBasketAndBuy2Items("Standard_User", "Backpack,Bolt T-Shirt,Bike Light", "Bolt T-Shirt", "rohit", "saraswat", "282007", ((string[])(null)));
 #line hidden
         }
     }
