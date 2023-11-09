@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<locators>
+		<xpath page="login" name="header">//div[@class='login_logo']</xpath>
+		<xpath page="login" name="next">//form[contains(@class,'form-signin')]/button[@id='loginbtn']</xpath>
+		<xpath page="login" name="password">//form[contains(@class,'form-signin')]//input[@id='loginPassword']</xpath>
+		<xpath page="login" name="signin">//form[contains(@class,'form-signin')]//button[@id='loginbtn']</xpath>
+		<xpath page="apps"  name="addmodifyapp">//section[@id='main-container']//span[contains(@class,'plus-sign-icon')]</xpath>
+		<xpath page="apps"  name="applications">//div[@id='main-navigation']//a[@id='menu-apps']</xpath>
+
+	</locators>
+	<!-- -->
+	<config key="SauceDemo_Site" value="https://www.saucedemo.com" ></config>
+	<config key="Standard_User" value="standard_user"></config>
+	<config key="Password" value="secret_sauce"></config>
+</root>
