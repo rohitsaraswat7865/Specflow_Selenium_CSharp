@@ -5567,11 +5567,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rohit\\assignment\\repos\\SauceDemo09112023\\SauceDemo\\SauceDemo.csproj",
+      "projectUniqueName": "D:\\Codebase\\09112023\\TestFramework_NET\\SauceDemo\\SauceDemo.csproj",
       "projectName": "SauceDemo",
-      "projectPath": "C:\\Users\\rohit\\assignment\\repos\\SauceDemo09112023\\SauceDemo\\SauceDemo.csproj",
+      "projectPath": "D:\\Codebase\\09112023\\TestFramework_NET\\SauceDemo\\SauceDemo.csproj",
       "packagesPath": "C:\\Users\\rohit\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rohit\\assignment\\repos\\SauceDemo09112023\\SauceDemo\\obj\\",
+      "outputPath": "D:\\Codebase\\09112023\\TestFramework_NET\\SauceDemo\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

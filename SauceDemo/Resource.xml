@@ -2,11 +2,11 @@
 <root>
 	<locators>
 		<xpath page="login" name="header">//div[@class='login_logo']</xpath>
-		<xpath page="login" name="next">//form[contains(@class,'form-signin')]/button[@id='loginbtn']</xpath>
-		<xpath page="login" name="password">//form[contains(@class,'form-signin')]//input[@id='loginPassword']</xpath>
-		<xpath page="login" name="signin">//form[contains(@class,'form-signin')]//button[@id='loginbtn']</xpath>
-		<xpath page="apps"  name="addmodifyapp">//section[@id='main-container']//span[contains(@class,'plus-sign-icon')]</xpath>
-		<xpath page="apps"  name="applications">//div[@id='main-navigation']//a[@id='menu-apps']</xpath>
+		<xpath page="login" name="username">//input[@id='user-name']</xpath>
+		<xpath page="login" name="password">//input[@id='password']</xpath>
+		<xpath page="login" name="button">//input[@id='login-button']</xpath>
+		<xpath page="product"  name="productlist">//div[@class='inventory_item']</xpath>
+		<xpath page="product"  name="applications">//div[@id='main-navigation']//a[@id='menu-apps']</xpath>
 
 	</locators>
 	<!-- -->

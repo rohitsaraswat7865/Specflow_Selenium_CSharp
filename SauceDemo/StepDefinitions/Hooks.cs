@@ -16,8 +16,7 @@ namespace SauceDemo.StepDefinitions
         {
             this.testObject = testObject;
             this.resourceManager = resourceManager;
-        }
-       
+        }       
 
         [BeforeScenario]
         public void FirstBeforeScenario()
