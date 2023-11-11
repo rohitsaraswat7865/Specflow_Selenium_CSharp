@@ -1,10 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V117.DOM;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,13 +14,15 @@ namespace SauceDemo.Support
 {
     public class Helper
     {
-        private R FluentRoutine<T,R>(T t, Func<T, R> func,TimeSpan pollingInterval, TimeSpan timeOut)
+        private void FluentRoutine<T>(T t, Func<T,bool> func,TimeSpan pollingInterval, TimeSpan timeOut)
         {
-            var defaultWait = new DefaultWait<T>(t);
-            defaultWait.PollingInterval = pollingInterval;
-            defaultWait.Timeout = timeOut;
-            defaultWait.Message = $" Fluent timeout on type {t.GetType()}";
-            return defaultWait.Until(func);
+            var defaultWait = new DefaultWait<T>(t)
+            {
+                PollingInterval = pollingInterval,
+                Timeout = timeOut,
+                Message = $" Fluent timeout on function -> {func.GetMethodInfo().Name} , polling internal ->{pollingInterval}, timeout -> {timeOut}"
+            };
+            _ = defaultWait.Until(func);//evaluates function until function returns true
         }
         /// <summary>
         /// TryGetElement
@@ -32,32 +36,35 @@ namespace SauceDemo.Support
         {
             try
             {
-                IWebElement element;
-                element = this.FluentRoutine<IWebDriver, IWebElement>(
+                IWebElement? element = null;
+                this.FluentRoutine<IWebDriver>(
                     testObject.Driver,
                       (driver) =>
                       {
-                          return driver.FindElement(by);
+                          try
+                          {
+                              element = driver.FindElement(by);
+                          }
+                          catch (Exception)
+                          {
+                              return false;
+                          }
+                          return true;
                       },
                       TimeSpan.FromSeconds(2),
-                      TimeSpan.FromSeconds(6)
+                      TimeSpan.FromSeconds(50)
                     );
 
-                if (element != null)
+                if (element is not null)
                 {
-                    var rslt = this.FluentRoutine<IWebElement, bool>(
+                    this.FluentRoutine<IWebElement>(
                     element,
                     func,
-                    TimeSpan.FromSeconds(1),
-                    TimeSpan.FromSeconds(5)
+                    TimeSpan.FromSeconds(4),
+                    TimeSpan.FromSeconds(30)
                     );
-
-                    if(rslt == true)
-                    {
-                        return element;
-                    }
                 }
-                return null;
+                return element;
             }
             catch(Exception ex)
             {
@@ -72,34 +79,39 @@ namespace SauceDemo.Support
         /// <param name="func"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public IReadOnlyCollection<IWebElement> TryGetElements(TestObject testObject,By by, Func<IWebElement, bool> func)
+        public IReadOnlyCollection<IWebElement>? TryGetElements(TestObject testObject,By by, Func<IWebElement, bool> func)
         {
             try
             {
-                IReadOnlyCollection<IWebElement> elements;
-                elements = this.FluentRoutine<IWebDriver, IReadOnlyCollection < IWebElement >> (
+                IReadOnlyCollection<IWebElement>? elements = null;
+                this.FluentRoutine<IWebDriver> (
                     testObject.Driver,
                       (driver) =>
                       {
-                          return driver.FindElements(by);
+                          try
+                          {
+                              elements = driver.FindElements(by);
+                          }
+                          catch (Exception)
+                          {
+                              return false;
+                          }
+                          return elements is null ? false : true;
                       },
                       TimeSpan.FromSeconds(2),
-                      TimeSpan.FromSeconds(6)
+                      TimeSpan.FromSeconds(50)
                     );
 
                 if (elements != null)
                 {
-                    foreach(var element in elements)
+                    foreach (var element in elements)
                     {
-                    var rslt = this.FluentRoutine<IWebElement, bool>(
-                    element,
-                    func,
-                    TimeSpan.FromSeconds(1),
-                    TimeSpan.FromSeconds(5)
-                   
-                    );
-                        if (rslt == false) return null;
-                    }                    
+                        this.FluentRoutine<IWebElement>(
+                        element,
+                        func,
+                        TimeSpan.FromSeconds(4),
+                        TimeSpan.FromSeconds(30));
+                    }                                   
                 }
                 return elements;
             }
@@ -121,32 +133,35 @@ namespace SauceDemo.Support
         {
             try
             {
-                IWebElement element;
-                element = this.FluentRoutine<IWebElement, IWebElement>(
+                IWebElement? element = null;
+                this.FluentRoutine<IWebElement>(
                     parentElement,
                       (parent) =>
                       {
-                          return parent.FindElement(by);
+                          try
+                          {
+                              element = parent.FindElement(by);
+                          }
+                          catch (Exception)
+                          {
+                              return false; ;
+                          }
+                          return true;
                       },
                       TimeSpan.FromSeconds(2),
-                      TimeSpan.FromSeconds(6)
+                      TimeSpan.FromSeconds(50)
                     );
 
                 if (element != null)
                 {
-                    var rslt = this.FluentRoutine<IWebElement, bool>(
+                    this.FluentRoutine<IWebElement>(
                     element,
                     func,
                     TimeSpan.FromSeconds(1),
                     TimeSpan.FromSeconds(5)
                     );
-
-                    if (rslt == true)
-                    {
-                        return element;
-                    }
                 }
-                return null;
+                return element;
             }
             catch (Exception ex)
             {
@@ -160,14 +175,14 @@ namespace SauceDemo.Support
         /// <param name="subString"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public bool CheckIfPageIsLoaded(TestObject testObject, string subString)
+        public void CheckIfPageIsLoaded(TestObject testObject, string subString)
         {
             try
             {
                 WebDriverWait explicitWait = new WebDriverWait(testObject.Driver, TimeSpan.FromSeconds(100));
-                explicitWait.Until(x => ((IJavaScriptExecutor)testObject.Driver).ExecuteScript("return document.readyState").Equals("complete"));
+                _ = explicitWait.Until(x => ((IJavaScriptExecutor)testObject.Driver).ExecuteScript("return document.readyState").Equals("complete"));
 
-                return this.FluentRoutine(testObject.Driver,
+                this.FluentRoutine(testObject.Driver,
                     (driver) =>
                     {
                         return driver.Url.Contains(subString);

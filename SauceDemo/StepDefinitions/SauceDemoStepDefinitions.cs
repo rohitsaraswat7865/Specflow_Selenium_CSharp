@@ -5,6 +5,7 @@ using SauceDemo.Support;
 using System;
 using System.Runtime.CompilerServices;
 using TechTalk.SpecFlow;
+using static SauceDemo.Support.TestObject;
 
 namespace SauceDemo.StepDefinitions
 {
@@ -28,7 +29,7 @@ namespace SauceDemo.StepDefinitions
         {
             try
             {
-                Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "saucedemo"));
+                helper.CheckIfPageIsLoaded(testObject, "saucedemo");
                 var headerTextElement = helper.TryGetElement(testObject, locators["login_header"], element => element.Displayed && element.Enabled);
                 Assert.IsNotNull(headerTextElement);
                 Assert.IsTrue(headerTextElement.Text.Equals("Swag Labs"));
@@ -91,7 +92,7 @@ namespace SauceDemo.StepDefinitions
         {
             try
             {
-                Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "/inventory"));
+                helper.CheckIfPageIsLoaded(testObject, "/inventory");
             }
             catch (Exception ex)
             {
@@ -157,7 +158,7 @@ namespace SauceDemo.StepDefinitions
         {
             try
             {
-                Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "/cart"));
+                helper.CheckIfPageIsLoaded(testObject, "/cart");
             }
             catch (Exception ex)
             {
@@ -174,14 +175,14 @@ namespace SauceDemo.StepDefinitions
                 var buttonIterator = removeButtons.GetEnumerator();
                 foreach (var product in listOfProductsInCart)
                 {
+                    buttonIterator.MoveNext();
                     if (product.Text.Contains(productToRemove))
                     {
                         var actions = new Actions(testObject.Driver);
                         actions.MoveToElement(buttonIterator.Current);
                         actions.Click();
                         actions.Build().Perform();
-                    }
-                    buttonIterator.MoveNext();
+                    }                    
                 }
             }
             catch (Exception ex)
@@ -211,7 +212,7 @@ namespace SauceDemo.StepDefinitions
         {
             try
             {
-                Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "/checkout-step-one"));
+                helper.CheckIfPageIsLoaded(testObject, "/checkout-step-one");
             }
             catch (Exception ex)
             {
@@ -261,7 +262,7 @@ namespace SauceDemo.StepDefinitions
         {
             try
             {
-                Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "/checkout-step-two"));
+                helper.CheckIfPageIsLoaded(testObject, "/checkout-step-two");
             }
             catch (Exception ex)
             {
@@ -291,7 +292,7 @@ namespace SauceDemo.StepDefinitions
         {
             try
             {
-                Assert.IsTrue(helper.CheckIfPageIsLoaded(testObject, "/checkout-complete"));
+                helper.CheckIfPageIsLoaded(testObject, "/checkout-complete");
             }
             catch (Exception ex)
             {

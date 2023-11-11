@@ -4,6 +4,7 @@ using OpenQA.Selenium.Interactions;
 using TechTalk.SpecFlow;
 using SauceDemo.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static SauceDemo.Support.TestObject;
 
 namespace SauceDemo.StepDefinitions
 {
@@ -26,7 +27,7 @@ namespace SauceDemo.StepDefinitions
                 var locators = resourceManager.GetLocators(SupportedResourceType.xpath);
                 var configElements = resourceManager.GetConfiguration();
                 var url = configElements["SauceDemo_Site"];
-                this.testObject.Driver.Navigate().GoToUrl(url);
+                testObject.Driver.Navigate().GoToUrl(url);
             }
             catch(Exception ex)
             {
