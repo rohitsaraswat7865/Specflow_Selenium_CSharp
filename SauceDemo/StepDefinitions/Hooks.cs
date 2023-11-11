@@ -1,10 +1,7 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Interactions;
-using TechTalk.SpecFlow;
-using SauceDemo.Support;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static SauceDemo.Support.TestObject;
+﻿global using TechTalk.SpecFlow;
+global using SauceDemo.Support;
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 namespace SauceDemo.StepDefinitions
 {

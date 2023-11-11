@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Configuration;
-using System.Xml;
-using OpenQA.Selenium;
+﻿using System.Xml;
+
 
 namespace SauceDemo.Support
 {

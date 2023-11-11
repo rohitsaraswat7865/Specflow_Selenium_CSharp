@@ -1,14 +1,9 @@
-﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V117.DOM;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿global using OpenQA.Selenium;
+global using OpenQA.Selenium.Support.UI;
+global using OpenQA.Selenium.Chrome;
+global using System;
+global using System.Collections.Generic;
+global using System.Reflection;
 
 namespace SauceDemo.Support
 {

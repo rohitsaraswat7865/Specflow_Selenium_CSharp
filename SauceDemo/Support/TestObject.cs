@@ -1,8 +1,4 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using static SauceDemo.Support.TestObject;
-
-namespace SauceDemo.Support
+﻿namespace SauceDemo.Support
 {
     /// <summary>
     /// Disposable test object

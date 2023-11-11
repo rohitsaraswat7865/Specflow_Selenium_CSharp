@@ -1,12 +1,3 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using SauceDemo.Support;
-using System;
-using System.Runtime.CompilerServices;
-using TechTalk.SpecFlow;
-using static SauceDemo.Support.TestObject;
-
 namespace SauceDemo.StepDefinitions
 {
     [Binding]
