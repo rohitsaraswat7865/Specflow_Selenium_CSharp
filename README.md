@@ -1,4 +1,4 @@
-# Demo TestFramework_NET
+# Specflow_Selenium_C# - base framework
 Demo TestFramework_NET - Specflow, C# Selenium
 
 1) Install chrome browser
