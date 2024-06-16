@@ -1,4 +1,4 @@
-# Specflow_Selenium_C# -BaseFramework
+# Specflow_Selenium_C#
 
 1) Install chrome browser
 2) Download and install Dotnet SDK 7 - https://dotnet.microsoft.com/en-us/download
