@@ -10,4 +10,5 @@
 6) **dotnet build --property WarningLevel=0**
 7) **dotnet test --filter TestCategory=regression**
 -------------------------------------------------------------------------------------------------------------------
-<img width="7313" height="3489" alt="EgonZehnder" src="https://github.com/user-attachments/assets/9dfe40c9-4f20-4185-a70c-17ec1aa76441" />
+
+<img width="7313" height="3489" alt="Egon" src="https://github.com/user-attachments/assets/e5a66f1e-2e55-4ed5-9a1e-01465f4f5242" />
