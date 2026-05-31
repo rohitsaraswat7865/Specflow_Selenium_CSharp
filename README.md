@@ -9,3 +9,5 @@
 5) **dotnet clean**
 6) **dotnet build --property WarningLevel=0**
 7) **dotnet test --filter TestCategory=regression**
+-------------------------------------------------------------------------------------------------------------------
+<img width="7313" height="3489" alt="EgonZehnder" src="https://github.com/user-attachments/assets/9dfe40c9-4f20-4185-a70c-17ec1aa76441" />
